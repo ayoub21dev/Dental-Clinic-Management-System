@@ -34,17 +34,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // 2. Database Authentication
     // Proceed if there are no validation errors
     if(empty($username_err) && empty($password_err)){
-        // Prepare a SELECT statement to fetch user data
-        // Using prepared statements is a best practice to prevent SQL Injection attacks
+        
         $sql = "SELECT user_id, username, password_hash, role FROM users WHERE username = ? OR email = ?";
 
         if($stmt = mysqli_prepare($conn, $sql)){
-            // Bind variables to the prepared statement as parameters (s = string)
+            
             mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_email);
 
-            // Set parameters (user can log in using either username or email)
+            //
             $param_username = $username;
-            $param_email = $username; // Use the same value to search in the email column as well
+            $param_email = $username; 
 
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
